@@ -36,7 +36,7 @@ public class CrudOperations {
         }
     }
 
-    public static void insertUser(Connection con) {
+    public static void insert(Connection con) {
         String model, color;
         int year, result;
         Statement stmt;
@@ -53,6 +53,39 @@ public class CrudOperations {
 
         String sql = "INSERT INTO automoviles(model, year, color)" +
                 "VALUES ('" + model + "', " + year + ", '" + color + "')";
+
+        System.out.println("query");
+        System.out.println(sql);
+
+        try {
+            stmt = con.createStatement();
+            result = stmt.executeUpdate(sql);
+            if (result == 1) {
+                System.out.println("Los datos fueron agregados");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        read(con);
+    }
+
+    public static void update(Connection con, int id) {
+        String model, color;
+        int year, result;
+        Statement stmt;
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("intruduce el modelo de tu auto");
+        model = in.next();
+        System.out.println("intruduce el año de tu auto");
+        year = in.nextInt();
+        System.out.println("intruduce el color de tu auto");
+        color = in.next();
+
+        String sql = "UPDATE automoviles " +
+                "SET model='" + model + "', year=" + year + ", color='" + color +"' "+
+                "WHERE id=" + id;
 
         System.out.println("query");
         System.out.println(sql);
@@ -94,5 +127,34 @@ public class CrudOperations {
             throw new RuntimeException(e);
         }
         read(con);
+    }
+
+    public static void mostrarRegistroUnico(Connection con,int id) {
+        //variables para la base de datos
+        int year;
+        String model, color;
+
+        String sql =  "SELECT * FROM automoviles WHERE id = " + id;
+        Statement stmt;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            System.out.printf("%-6s %-10s %-10s %-10s%n", "id", "model", "year", "color");
+
+            while (rs.next()) {
+                id = rs.getInt("id");
+                model = rs.getString("model");
+                year = rs.getInt("year");
+                color = rs.getString("color");
+
+                System.out.printf("%-6s %-10s %-10s %-10s%n", id, model, year, color);
+            }
+            System.out.printf("%n");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

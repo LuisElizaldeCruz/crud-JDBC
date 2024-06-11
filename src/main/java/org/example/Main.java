@@ -3,6 +3,8 @@ package org.example;
 import java.sql.*;
 import java.util.Scanner;
 
+import static org.example.CrudOperations.mostrarRegistroUnico;
+
 class Main {
 
     public static void main(String[] args) {
@@ -18,7 +20,8 @@ class Main {
             System.out.println("introduzca una operación a realizar a la base de datos");
             System.out.println("1.- Mostra BD");
             System.out.println("2.- Insertar un dato");
-            System.out.println("3.- Eliminar fila por id");
+            System.out.println("3.- Actualizar datos por id");
+            System.out.println("4.- Eliminar fila por id");
             System.out.printf("-1 Salir del programa%n");
             opcion = in.nextInt();
             switch (opcion) {
@@ -26,9 +29,18 @@ class Main {
                     crOp.read(bd);
                     break;
                 case 2:
-                    crOp.insertUser(bd);
+                    crOp.insert(bd);
                     break;
                 case 3:
+                    Scanner in2 = new Scanner(System.in);
+                    int id;
+
+                    System.out.printf("intruduce el id del registro a actualizar%n");
+                    id = in.nextInt();
+                    mostrarRegistroUnico(bd, id);
+                    crOp.update(bd, id);
+                    break;
+                case 4:
                     crOp.Delete(bd);
                     break;
                 default:
