@@ -15,7 +15,7 @@ class Main {
         Scanner in = new Scanner(System.in);
 
         do {
-            System.out.println("introduzca una operacion a realizar a la base de datos");
+            System.out.println("introduzca una operación a realizar a la base de datos");
             System.out.println("1.- Mostra BD");
             System.out.println("2.- Insertar un dato");
             System.out.println("3.- Eliminar fila por id");

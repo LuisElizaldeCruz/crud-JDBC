@@ -17,7 +17,7 @@ public class ConnectionDB {
 
             //validacion si existe alguna tabla en la base de datos
             DatabaseMetaData dbm = conexion.getMetaData();
-            ResultSet tables = dbm.getTables(null, null, "%", null);
+            ResultSet tables = dbm.getTables(null, null, "automoviles", null);
 
             if (!tables.next()) {
                 System.out.println("La base de datos no tiene tablas.");
@@ -25,7 +25,7 @@ public class ConnectionDB {
                 System.out.println("La tabla 'autos' no existe. Creando la tabla...");
 
                 Statement statement = conexion.createStatement();
-                String sql = "CREATE TABLE autos (" +
+                String sql = "CREATE TABLE automoviles (" +
                         "id INT NOT NULL AUTO_INCREMENT, " +
                         "model VARCHAR(45) NOT NULL, " +
                         "year INT NOT NULL, " +
