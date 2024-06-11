@@ -1,7 +1,10 @@
+package org.example;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class CrudOperations {
     public static void read(Connection con) {
@@ -9,7 +12,7 @@ public class CrudOperations {
         int id, year;
         String model, color;
 
-        String sql = "SELECT * FROM camionetas";
+        String sql = "SELECT * FROM automoviles";
         Statement stmt;
         ResultSet rs;
 
@@ -33,11 +36,24 @@ public class CrudOperations {
         }
     }
 
-    public static void insertUser(Connection con, String model, int year, String color) {
-        String sql = "INSERT INTO camionetas(model, year, color)" +
-                "VALUES ('" + model + "', " + year + ", '" + color + "')";
+    public static void insertUser(Connection con) {
+        String model, color;
+        int year, result;
         Statement stmt;
-        int result;
+
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("intruduce el modelo de tu auto");
+        model = in.next();
+        System.out.println("intruduce el año de tu auto");
+        year = in.nextInt();
+        System.out.println("intruduce el color de tu auto");
+        color = in.next();
+
+        String sql = "INSERT INTO automoviles(model, year, color)" +
+                "VALUES ('" + model + "', " + year + ", '" + color + "')";
+
         System.out.println("query");
         System.out.println(sql);
 
@@ -54,10 +70,15 @@ public class CrudOperations {
         read(con);
     }
 
-    public static void Delete(Connection con, int id) {
-        String sql = "DELETE FROM camionetas where id = '" + id + "'";
+    public static void Delete(Connection con) {
+        int id, result;
         Statement stmt;
-        int result;
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Introduce un id de una fila a eliminar en la base de datos");
+        id = in.nextInt();
+
+        String sql = "DELETE FROM automoviles where id = '" + id + "'";
 
         try {
             stmt = con.createStatement();
